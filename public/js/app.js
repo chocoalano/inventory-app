@@ -2079,8 +2079,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3532,122 +3530,115 @@ var render = function() {
     { staticClass: "secondary", attrs: { id: "login" } },
     [
       _c(
-        "v-content",
+        "v-container",
+        { attrs: { fluid: "", "fill-height": "" } },
         [
           _c(
-            "v-container",
-            { attrs: { fluid: "", "fill-height": "" } },
+            "v-layout",
+            { attrs: { "align-center": "", "justify-center": "" } },
             [
               _c(
-                "v-layout",
-                { attrs: { "align-center": "", "justify-center": "" } },
+                "v-flex",
+                { attrs: { xs12: "", sm8: "", md4: "", lg4: "" } },
                 [
                   _c(
-                    "v-flex",
-                    { attrs: { xs12: "", sm8: "", md4: "", lg4: "" } },
+                    "v-card",
+                    { staticClass: "elevation-1 pa-3" },
                     [
                       _c(
-                        "v-card",
-                        { staticClass: "elevation-1 pa-3" },
+                        "v-card-text",
                         [
                           _c(
-                            "v-card-text",
+                            "div",
+                            { staticClass: "layout column align-center" },
                             [
-                              _c(
-                                "div",
-                                { staticClass: "layout column align-center" },
-                                [
-                                  _c("img", {
-                                    attrs: {
-                                      src: "",
-                                      alt: "Vue Material Admin",
-                                      width: "180",
-                                      height: "180"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "h1",
-                                    { staticClass: "flex my-4 primary--text" },
-                                    [_vm._v("Vue Admin Template")]
-                                  )
-                                ]
-                              ),
+                              _c("img", {
+                                attrs: {
+                                  src:
+                                    "http://localhost:8000/storage/img/diamond.png",
+                                  alt: "Vue Material Admin",
+                                  width: "180",
+                                  height: "180"
+                                }
+                              }),
                               _vm._v(" "),
                               _c(
-                                "v-form",
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      "append-icon": "mdi-account-circle",
-                                      name: "login",
-                                      label: "Login",
-                                      type: "text",
-                                      error: _vm.error,
-                                      rules: [_vm.rules.required]
-                                    },
-                                    model: {
-                                      value: _vm.userEmail,
-                                      callback: function($$v) {
-                                        _vm.userEmail = $$v
-                                      },
-                                      expression: "userEmail"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      type: _vm.hidePassword
-                                        ? "password"
-                                        : "text",
-                                      "append-icon": _vm.hidePassword
-                                        ? "mdi-eye-off"
-                                        : "mdi-eye",
-                                      name: "password",
-                                      label: "Password",
-                                      id: "password",
-                                      rules: [_vm.rules.required],
-                                      error: _vm.error
-                                    },
-                                    on: {
-                                      "click:append": function($event) {
-                                        _vm.hidePassword = !_vm.hidePassword
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.password,
-                                      callback: function($$v) {
-                                        _vm.password = $$v
-                                      },
-                                      expression: "password"
-                                    }
-                                  })
-                                ],
-                                1
+                                "h1",
+                                { staticClass: "flex my-4 primary--text" },
+                                [_vm._v("Vue Admin Template")]
                               )
-                            ],
-                            1
+                            ]
                           ),
                           _vm._v(" "),
                           _c(
-                            "v-card-actions",
+                            "v-form",
                             [
-                              _c("v-spacer"),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: {
-                                    block: "",
-                                    color: "primary",
-                                    loading: _vm.loading
-                                  },
-                                  on: { click: _vm.login }
+                              _c("v-text-field", {
+                                attrs: {
+                                  "append-icon": "mdi-account-circle",
+                                  name: "login",
+                                  label: "Login",
+                                  type: "text",
+                                  error: _vm.error,
+                                  rules: [_vm.rules.required]
                                 },
-                                [_vm._v("Login")]
-                              )
+                                model: {
+                                  value: _vm.userEmail,
+                                  callback: function($$v) {
+                                    _vm.userEmail = $$v
+                                  },
+                                  expression: "userEmail"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("v-text-field", {
+                                attrs: {
+                                  type: _vm.hidePassword ? "password" : "text",
+                                  "append-icon": _vm.hidePassword
+                                    ? "mdi-eye-off"
+                                    : "mdi-eye",
+                                  name: "password",
+                                  label: "Password",
+                                  id: "password",
+                                  rules: [_vm.rules.required],
+                                  error: _vm.error
+                                },
+                                on: {
+                                  "click:append": function($event) {
+                                    _vm.hidePassword = !_vm.hidePassword
+                                  }
+                                },
+                                model: {
+                                  value: _vm.password,
+                                  callback: function($$v) {
+                                    _vm.password = $$v
+                                  },
+                                  expression: "password"
+                                }
+                              })
                             ],
                             1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        [
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: {
+                                block: "",
+                                color: "primary",
+                                loading: _vm.loading
+                              },
+                              on: { click: _vm.login }
+                            },
+                            [_vm._v("Login")]
                           )
                         ],
                         1
@@ -3660,24 +3651,24 @@ var render = function() {
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-snackbar",
-            {
-              attrs: { timeout: 2000, top: "" },
-              model: {
-                value: _vm.showResult,
-                callback: function($$v) {
-                  _vm.showResult = $$v
-                },
-                expression: "showResult"
-              }
-            },
-            [_vm._v("\n      " + _vm._s(_vm.result) + "\n    ")]
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { timeout: 2000, top: "" },
+          model: {
+            value: _vm.showResult,
+            callback: function($$v) {
+              _vm.showResult = $$v
+            },
+            expression: "showResult"
+          }
+        },
+        [_vm._v("\n    " + _vm._s(_vm.result) + "\n  ")]
       )
     ],
     1
