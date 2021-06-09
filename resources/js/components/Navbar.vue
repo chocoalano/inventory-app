@@ -89,6 +89,7 @@
     </section>
 </template>
 <script>
+import { mapActions, mapMutations, mapGetters, mapState } from 'vuex';
 export default {
   props: {
       source: String,
@@ -97,9 +98,12 @@ export default {
       drawer: null,
     }),
     methods: {
+      ...mapActions('auth', ['logout']),
+      ...mapMutations(['CLEAR_ERRORS']),
         signoutButtonPressed() {
-            this.$store.dispatch('clearState');
-            this.$router.push({ name: "Login" });
+          this.logout().then((e) => {
+            this.$router.push({ name: 'login' })
+          })
         }
     }
 };

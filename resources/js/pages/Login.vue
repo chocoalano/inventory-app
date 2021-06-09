@@ -1,6 +1,6 @@
 <template>
-  <v-app id="login" class="secondary">
-    <v-container fluid fill-height>
+  <v-app>
+    <v-container fluid fill-height class="pink accent-3">
       <v-layout align-center justify-center>
         <v-flex xs12 sm8 md4 lg4>
           <v-card class="elevation-1 pa-3">
@@ -15,7 +15,7 @@
                   name="login"
                   label="Login"
                   type="text"
-                  v-model="userEmail"
+                  v-model="data.email"
                   :error="error"
                   :rules="[rules.required]"/>
                 <v-text-field
@@ -25,7 +25,7 @@
                   label="Password"
                   id="password"
                   :rules="[rules.required]"
-                  v-model="password"
+                  v-model="data.password"
                   :error="error"
                   @click:append="hidePassword = !hidePassword"/>
               </v-form>
@@ -48,12 +48,15 @@
 </template>
 
 <script>
+import { mapActions, mapMutations, mapGetters, mapState } from 'vuex';
 export default {
   data() {
     return {
+      data: {
+                email: '',
+                password: ''
+            },
       loading: false,
-      userEmail: 'admin@yopmail.com',
-      password: '123456',
       hidePassword: true,
       error: false,
       showResult: false,
@@ -63,40 +66,27 @@ export default {
       }
     }
   },
+  created() {
+      if (this.isAuth) {
+          this.$router.push({ name: 'home' })
+      }
+  },
+  computed: {
+      ...mapGetters(['isAuth']),
+    	...mapState(['errors'])
+  },
 
   methods: {
+    ...mapActions('auth', ['submit']),
+    ...mapMutations(['CLEAR_ERRORS']),
     login() {
-      const vm = this;
-
-      if (!vm.userEmail || !vm.password) {
-
-        vm.result = "Email and Password can't be null.";
-        vm.showResult = true;
-
-        return;
-      }
-
-      if (vm.userEmail === vm.$root.userEmail && vm.password === vm.$root.userPassword) {
-        vm.$router.push({ name: 'Dashboard' });
-      }
-      else {
-        vm.error = true;
-        vm.result = "Email or Password is incorrect.";
-        vm.showResult = true;
-      }
+      this.submit(this.data).then(() => {
+          if (this.isAuth) {
+              this.CLEAR_ERRORS()
+              this.$router.push({ name: 'home' })
+          }
+      })
     }
   }
 }
 </script>
-
-<style scoped lang="css">
-  #login {
-    height: 50%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: "";
-    z-index: 0;
-  }
-</style>
