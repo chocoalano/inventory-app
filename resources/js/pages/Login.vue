@@ -7,7 +7,7 @@
             <v-card-text>
               <div class="layout column align-center">
                 <img src="http://localhost:8000/storage/img/diamond.png" alt="Vue Material Admin" width="180" height="180">
-                <h1 class="flex my-4 primary--text">Vue Admin Template</h1>
+                <h1 class="flex my-4 primary--text">App Inventory</h1>
               </div>
               <v-form>
                 <v-text-field
@@ -32,7 +32,9 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
+              <v-btn block color="primary" @click="login" :loading="loading">
+                Login
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -56,7 +58,6 @@ export default {
                 email: '',
                 password: ''
             },
-      loading: false,
       hidePassword: true,
       error: false,
       showResult: false,
@@ -72,6 +73,9 @@ export default {
       }
   },
   computed: {
+      ...mapState('auth', {
+          loading: state => state.loading
+      }),
       ...mapGetters(['isAuth']),
     	...mapState(['errors'])
   },

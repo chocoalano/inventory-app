@@ -18,7 +18,6 @@
         },
         components: {
             'app-navbar': Header,
-            // 'app-footer': Footer
         }
     }
 </script>
