@@ -10,11 +10,15 @@ const state = () => ({
     itemsPerPage: 0,
     pageCount: 0,
     pageLength: 0,
+    dialogcreate: false
 })
 
 const mutations = {
     ASSIGN_DATA(state, payload) {
         state.userdata = payload
+    },
+    SET_DIALOG_CREATE(state, payload) {
+        state.dialogcreate = payload
     },
     SET_PAGE(state, payload) {
         state.page = payload

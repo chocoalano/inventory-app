@@ -1,54 +1,40 @@
 <template>
     <section>
         <v-navigation-drawer v-model="drawer" app>
-        <v-list-item>
-            <v-list-item-content>
-            <v-list-item-title class="title">
-                App Inventory
-            </v-list-item-title>
-            <v-list-item-subtitle class="mt-2">
-                {{user.email}}
-            </v-list-item-subtitle>
-            </v-list-item-content>
-        </v-list-item>
-        <v-divider></v-divider>
-        <v-list dense nav>
-            <v-list-item to="/">
-                <v-list-item-action>
-                    <v-icon>mdi-home</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                    <v-list-item-title>Home</v-list-item-title>
-                </v-list-item-content>
+          <v-list>
+            <v-list-item link>
+              <v-list-item-content>
+                <v-list-item-title class="text-h6">
+                  {{user.name}}
+                </v-list-item-title>
+                <v-list-item-subtitle>{{user.email}}</v-list-item-subtitle>
+              </v-list-item-content>
             </v-list-item>
-            <v-list-item  to="/users">
-                <v-list-item-action>
-                    <v-icon>mdi-account-box-multiple</v-icon>
-                </v-list-item-action>
+          </v-list>
+          <v-divider></v-divider>
+          <v-list nav dense>
+            <v-list-item-group
+              v-model="selectedItem"
+              color="primary"
+            >
+              <v-list-item to="/">
+                <v-list-item-icon>
+                  <v-icon>mdi-home</v-icon>
+                </v-list-item-icon>
                 <v-list-item-content>
-                    <v-list-item-title>Users Manage</v-list-item-title>
+                  <v-list-item-title>Home</v-list-item-title>
                 </v-list-item-content>
-            </v-list-item>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list dense nav>
-            <v-list-item  to="/Messages">
-                <v-list-item-action>
-                    <v-badge>
-                        <template v-slot:badge>0</template>
-                        <v-icon>mdi-email</v-icon>
-                    </v-badge>
-                </v-list-item-action>
+              </v-list-item>
+              <v-list-item to="/users">
+                <v-list-item-icon>
+                  <v-icon>mdi-account-box-multiple</v-icon>
+                </v-list-item-icon>
                 <v-list-item-content>
-                    <v-list-item-title>Messages</v-list-item-title>
+                  <v-list-item-title>Users Manage</v-list-item-title>
                 </v-list-item-content>
-            </v-list-item>
-        </v-list>
-        <template v-slot:append>
-            <div class="pa-2">
-                <v-btn @click="signoutButtonPressed" color="red darken-4 white--text" block :loading="loading">Logout</v-btn>
-            </div>
-        </template>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
         </v-navigation-drawer>
 
         <v-app-bar app color="blue darken-4" dark>
@@ -94,6 +80,11 @@ export default {
     },
     data: () => ({
       drawer: null,
+      selectedItem: 0,
+      items: [
+        { text: 'Home', icon: 'mdi-home', link:'/' },
+        { text: 'Users Manage', icon: 'mdi-account-box-multiple', link:'/users' }
+      ],
     }),
     computed: {
         ...mapState('auth', {
