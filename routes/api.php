@@ -19,4 +19,6 @@ Route::post('login', 'AuthController@login');
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('auth-user', 'AuthController@getAuthenticatedUser');
     Route::get('logout', 'AuthController@logout');
+
+    Route::resource('/users', 'UserController');
 });

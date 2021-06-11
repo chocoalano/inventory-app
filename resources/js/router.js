@@ -20,7 +20,7 @@ const router = new Router({
             component: Home,
             meta: {
               requiresAuth: true,
-              title: 'Home pages' 
+              title: 'Home pages'
             }
         },
         {
@@ -56,6 +56,7 @@ const router = new Router({
 });
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
+        store.commit('CLEAR_ERRORS')
         let auth = store.getters.isAuth
         if (!auth) {
             next({ name: 'login' })

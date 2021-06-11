@@ -1898,9 +1898,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -2213,7 +2210,60 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_Breadscrum_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Breadscrum.vue */ "./resources/js/components/Breadscrum.vue");
+var _name$components$name;
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2230,184 +2280,80 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_name$components$name = {
   name: 'home',
   components: {
     'breadcrumb': _components_Breadscrum_vue__WEBPACK_IMPORTED_MODULE_0__.default
+  }
+}, _defineProperty(_name$components$name, "name", 'DataOutlet'), _defineProperty(_name$components$name, "created", function created() {
+  this.getUsers();
+}), _defineProperty(_name$components$name, "data", function data() {
+  return {
+    headers: [{
+      text: 'Name',
+      align: 'start',
+      sortable: false,
+      value: 'name'
+    }, {
+      text: 'Email',
+      value: 'email'
+    }, {
+      text: 'Act',
+      value: 'id'
+    }],
+    search: ''
+  };
+}), _defineProperty(_name$components$name, "computed", _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)('userscrud', {
+  Users: function Users(state) {
+    return state.userdata;
   },
-  data: function data() {
-    return {
-      totalDesserts: 0,
-      desserts: [],
-      loading: true,
-      options: {},
-      headers: [{
-        text: 'Dessert (100g serving)',
-        align: 'start',
-        sortable: false,
-        value: 'name'
-      }, {
-        text: 'Calories',
-        value: 'calories'
-      }, {
-        text: 'Fat (g)',
-        value: 'fat'
-      }, {
-        text: 'Carbs (g)',
-        value: 'carbs'
-      }, {
-        text: 'Protein (g)',
-        value: 'protein'
-      }, {
-        text: 'Iron (%)',
-        value: 'iron'
-      }]
-    };
+  itemsPerPage: function itemsPerPage(state) {
+    return state.itemsPerPage;
   },
-  watch: {
-    options: {
-      handler: function handler() {
-        this.getDataFromApi();
-      },
-      deep: true
-    }
+  pageCount: function pageCount(state) {
+    return state.pageCount;
   },
-  mounted: function mounted() {
-    this.getDataFromApi();
-  },
-  methods: {
-    getDataFromApi: function getDataFromApi() {
-      var _this = this;
-
-      this.loading = true;
-      this.fakeApiCall().then(function (data) {
-        _this.desserts = data.items;
-        _this.totalDesserts = data.total;
-        _this.loading = false;
-      });
+  pageLength: function pageLength(state) {
+    return state.pageLength;
+  }
+})), {}, {
+  page: {
+    get: function get() {
+      return this.$store.state.userscrud.page;
     },
-
-    /**
-     * In a real application this would be a call to fetch() or axios.get()
-     */
-    fakeApiCall: function fakeApiCall() {
-      var _this2 = this;
-
-      return new Promise(function (resolve, reject) {
-        var _this2$options = _this2.options,
-            sortBy = _this2$options.sortBy,
-            sortDesc = _this2$options.sortDesc,
-            page = _this2$options.page,
-            itemsPerPage = _this2$options.itemsPerPage;
-
-        var items = _this2.getDesserts();
-
-        var total = items.length;
-
-        if (sortBy.length === 1 && sortDesc.length === 1) {
-          items = items.sort(function (a, b) {
-            var sortA = a[sortBy[0]];
-            var sortB = b[sortBy[0]];
-
-            if (sortDesc[0]) {
-              if (sortA < sortB) return 1;
-              if (sortA > sortB) return -1;
-              return 0;
-            } else {
-              if (sortA < sortB) return -1;
-              if (sortA > sortB) return 1;
-              return 0;
-            }
-          });
-        }
-
-        if (itemsPerPage > 0) {
-          items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage);
-        }
-
-        setTimeout(function () {
-          resolve({
-            items: items,
-            total: total
-          });
-        }, 1000);
-      });
-    },
-    getDesserts: function getDesserts() {
-      return [{
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        iron: '1%'
-      }, {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        iron: '1%'
-      }, {
-        name: 'Eclair',
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0,
-        iron: '7%'
-      }, {
-        name: 'Cupcake',
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3,
-        iron: '8%'
-      }, {
-        name: 'Gingerbread',
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9,
-        iron: '16%'
-      }, {
-        name: 'Jelly bean',
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0,
-        iron: '0%'
-      }, {
-        name: 'Lollipop',
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0,
-        iron: '2%'
-      }, {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5,
-        iron: '45%'
-      }, {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9,
-        iron: '22%'
-      }, {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7,
-        iron: '6%'
-      }];
+    set: function set(val) {
+      this.$store.commit('userscrud/SET_PAGE', val);
     }
   }
-});
+})), _defineProperty(_name$components$name, "watch", {
+  page: function page() {
+    this.getUsers();
+  },
+  search: function search() {
+    this.getUsers(this.search);
+  }
+}), _defineProperty(_name$components$name, "methods", _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('userscrud', ['getUsers', 'removeUsers'])), {}, {
+  deleteOutlet: function deleteOutlet(id) {
+    var _this = this;
+
+    this.$swal({
+      title: 'Kamu Yakin?',
+      text: "Tindakan ini akan menghapus secara permanent!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iya, Lanjutkan!'
+    }).then(function (result) {
+      //JIKA DISETUJUI
+      if (result.value) {
+        //MAKA FUNGSI removeOutlet AKAN DIJALANKAN
+        _this.removeUsers(id);
+      }
+    });
+  }
+})), _name$components$name);
 
 /***/ }),
 
@@ -2555,6 +2501,7 @@ router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (record) {
     return record.meta.requiresAuth;
   })) {
+    _store_js__WEBPACK_IMPORTED_MODULE_6__.default.commit('CLEAR_ERRORS');
     var auth = _store_js__WEBPACK_IMPORTED_MODULE_6__.default.getters.isAuth;
 
     if (!auth) {
@@ -2583,16 +2530,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _stores_auth_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stores/auth.js */ "./resources/js/stores/auth.js");
+/* harmony import */ var _stores_users_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stores/users.js */ "./resources/js/stores/users.js");
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.default);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_2__.default.Store({
+
+vue__WEBPACK_IMPORTED_MODULE_2__.default.use(vuex__WEBPACK_IMPORTED_MODULE_3__.default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
   modules: {
-    auth: _stores_auth_js__WEBPACK_IMPORTED_MODULE_0__.default
+    auth: _stores_auth_js__WEBPACK_IMPORTED_MODULE_0__.default,
+    userscrud: _stores_users_js__WEBPACK_IMPORTED_MODULE_1__.default
   },
   state: {
     token: localStorage.getItem('token'),
@@ -2720,6 +2670,134 @@ var actions = {
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__.default.get("/auth-user").then(function (response) {
         commit('SET_USER', response);
+      });
+    });
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/users.js":
+/*!**************************************!*\
+  !*** ./resources/js/stores/users.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api.js */ "./resources/js/api.js");
+
+
+var state = function state() {
+  return {
+    userdata: [],
+    user: {
+      name: '',
+      email: ''
+    },
+    page: 1,
+    itemsPerPage: 0,
+    pageCount: 0,
+    pageLength: 0
+  };
+};
+
+var mutations = {
+  ASSIGN_DATA: function ASSIGN_DATA(state, payload) {
+    state.userdata = payload;
+  },
+  SET_PAGE: function SET_PAGE(state, payload) {
+    state.page = payload;
+  },
+  SET_ITEMPERPAGE: function SET_ITEMPERPAGE(state, payload) {
+    state.itemsPerPage = payload;
+  },
+  SET_PAGECOUNT: function SET_PAGECOUNT(state, payload) {
+    state.pageCount = payload;
+  },
+  SET_PAGELENGTH: function SET_PAGELENGTH(state, payload) {
+    state.pageLength = payload;
+  },
+  ASSIGN_FORM: function ASSIGN_FORM(state, payload) {
+    state.user = {
+      name: payload.name,
+      email: payload.email
+    };
+  },
+  CLEAR_FORM: function CLEAR_FORM(state) {
+    state.user = {
+      name: '',
+      email: ''
+    };
+  }
+};
+var actions = {
+  getUsers: function getUsers(_ref, payload) {
+    var commit = _ref.commit,
+        state = _ref.state;
+    var search = typeof payload != 'undefined' ? payload : '';
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.get("/users?page=".concat(state.page, "&q=").concat(search)).then(function (response) {
+        commit('ASSIGN_DATA', response.data);
+        commit('SET_ITEMPERPAGE', response.data.meta.per_page);
+        commit('SET_PAGELENGTH', response.data.meta.current_page);
+        resolve(response.data);
+      });
+    });
+  },
+  submitUsers: function submitUsers(_ref2) {
+    var dispatch = _ref2.dispatch,
+        commit = _ref2.commit,
+        state = _ref2.state;
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.post("/users", state.Users).then(function (response) {
+        dispatch('getUsers').then(function () {
+          resolve(response.data);
+        });
+      })["catch"](function (error) {
+        if (error.response.status == 422) {
+          commit('SET_ERRORS', error.response.data.errors, {
+            root: true
+          });
+        }
+      });
+    });
+  },
+  editUsers: function editUsers(_ref3, payload) {
+    var commit = _ref3.commit;
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.get("/users/".concat(payload, "/edit")).then(function (response) {
+        commit('ASSIGN_FORM', response.data.data);
+        resolve(response.data);
+      });
+    });
+  },
+  updateUsers: function updateUsers(_ref4, payload) {
+    var state = _ref4.state,
+        commit = _ref4.commit;
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.put("/users/".concat(payload), state.Users).then(function (response) {
+        commit('CLEAR_FORM');
+        resolve(response.data);
+      });
+    });
+  },
+  removeUsers: function removeUsers(_ref5, payload) {
+    var dispatch = _ref5.dispatch;
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.delete("/users/".concat(payload)).then(function (response) {
+        dispatch('getUsers').then(function () {
+          return resolve();
+        });
       });
     });
   }
@@ -3789,8 +3867,11 @@ var render = function() {
     "div",
     [
       _c("v-breadcrumbs", [
-        _vm._v("\n     Pages\n     "),
-        _vm._v("\n     /\n     " + _vm._s(_vm.$route.meta.title) + "\n   ")
+        _vm._v(
+          "\n     Pages\n     /\n     " +
+            _vm._s(_vm.$route.meta.title) +
+            "\n   "
+        )
       ])
     ],
     1
@@ -4331,21 +4412,132 @@ var render = function() {
         [
           _c("breadcrumb"),
           _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1",
-            attrs: {
-              headers: _vm.headers,
-              items: _vm.desserts,
-              options: _vm.options,
-              "server-items-length": _vm.totalDesserts,
-              loading: _vm.loading
-            },
-            on: {
-              "update:options": function($event) {
-                _vm.options = $event
-              }
-            }
-          })
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-title",
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "mx-2",
+                      attrs: { fab: "", dark: "", small: "", color: "primary" }
+                    },
+                    [
+                      _c("v-icon", { attrs: { dark: "" } }, [
+                        _vm._v("\n              mdi-plus\n            ")
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      "append-icon": "mdi-magnify",
+                      label: "Search",
+                      "single-line": "",
+                      "hide-details": ""
+                    },
+                    model: {
+                      value: _vm.search,
+                      callback: function($$v) {
+                        _vm.search = $$v
+                      },
+                      expression: "search"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  headers: _vm.headers,
+                  items: _vm.Users.data,
+                  search: _vm.search,
+                  page: _vm.page,
+                  "items-per-page": _vm.itemsPerPage,
+                  "hide-default-footer": ""
+                },
+                on: {
+                  "update:page": function($event) {
+                    _vm.page = $event
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "item.id",
+                    fn: function(ref) {
+                      var item = ref.item
+                      return [
+                        _c(
+                          "v-row",
+                          [
+                            _c(
+                              "v-btn",
+                              { attrs: { icon: "", color: "pink" } },
+                              [_c("v-icon", [_vm._v("mdi-delete-sweep ")])],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("v-spacer"),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              { attrs: { icon: "", color: "secondary" } },
+                              [_c("v-icon", [_vm._v("mdi-clipboard-edit  ")])],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _vm.Users.data && _vm.pageLength > 0
+                ? _c(
+                    "v-row",
+                    { attrs: { justify: "center" } },
+                    [
+                      _c(
+                        "v-col",
+                        { attrs: { cols: "8" } },
+                        [
+                          _c(
+                            "v-container",
+                            { staticClass: "max-width" },
+                            [
+                              _c("v-pagination", {
+                                staticClass: "my-4",
+                                attrs: { length: _vm.pageLength, circle: "" },
+                                model: {
+                                  value: _vm.page,
+                                  callback: function($$v) {
+                                    _vm.page = $$v
+                                  },
+                                  expression: "page"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e()
+            ],
+            1
+          )
         ],
         1
       )
