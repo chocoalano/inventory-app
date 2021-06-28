@@ -2,14 +2,18 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from './stores/auth.js'
 import userscrud from './stores/users.js'
+import rolescrud from './stores/roles.js'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     modules: {
         auth,
-        userscrud
+        userscrud,
+        rolescrud,
     },
     state: {
         token: localStorage.getItem('token'),
+        expired: false,
+        baseUrl: process.env.NODE_ENV == 'production'? "https://example.com" : 'http://localhost:8000',
         errors: []
     },
     getters: {
@@ -20,6 +24,9 @@ const store = new Vuex.Store({
     mutations: {
         SET_TOKEN(state, payload) {
             state.token = payload
+        },
+        SET_EXPIRED(state, payload) {
+            state.expired = payload
         },
         SET_ERRORS(state, payload) {
             state.errors = payload

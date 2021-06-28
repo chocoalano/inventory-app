@@ -19,6 +19,10 @@ Route::post('login', 'AuthController@login');
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('auth-user', 'AuthController@getAuthenticatedUser');
     Route::get('logout', 'AuthController@logout');
-
+    Route::get('user-authenticated', 'AuthController@getUserLogin');
+    Route::post('/users-all-remove', 'UserController@removeSelect');
+    Route::get('/users-roles', 'UserController@getAllRole');
+    Route::get('/roles-permission', 'RolesController@getPermission');
     Route::resource('/users', 'UserController');
+    Route::resource('/roles', 'RolesController');
 });

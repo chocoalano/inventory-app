@@ -1,16 +1,16 @@
 <template>
   <div>
     <!-- modal dialog started -->
-    <v-dialog v-model="dialogcreate">
+    <v-dialog v-model="dialogcreate" width="500">
       <add-form></add-form>
     </v-dialog>
-    <v-dialog v-model="dialogedit">
+    <v-dialog v-model="dialogedit" width="500">
       <edit-form></edit-form>
     </v-dialog>
     <!-- modal dialog ended-->
     <v-card elevation="18" class="rounded-xl" color="grey darken-3 mt-3 mx-auto" dark>
       <v-card-text>
-        <div>Serverside Users Datatable.</div>
+        <div>Serverside Roles & Permission Datatable.</div>
       </v-card-text>
       <v-alert dense border="left" type="success" v-if="alert">
         {{alertmsg}}
@@ -19,7 +19,7 @@
       <v-data-table
         v-model="selected"
         :headers="headers"
-        :items="Users.data"
+        :items="rolesdata.data"
         :search="search"
         :page.sync="page"
         :items-per-page="itemsPerPage"
@@ -78,7 +78,7 @@
         'add-form': Add,
         'edit-form': Edit,
     },
-    name: 'DataOutlet',
+    name: 'DataRoles',
     created() {
         this.getUsers()
     },
@@ -91,7 +91,6 @@
                 sortable: false,
                 value: 'name',
               },
-              { text: 'Email', value: 'email' },
               { text: 'Created', value: 'created_at' },
               { text: 'Updated', value: 'updated_at' },
               { text: 'Actions', value: 'actions', sortable: false },
@@ -102,9 +101,9 @@
         }
     },
     computed: {
-        ...mapState('userscrud', {
+        ...mapState('rolescrud', {
             progress: state => state.progress_table,
-            Users: state => state.userdata,
+            rolesdata: state => state.rolesdata,
             itemsPerPage: state => state.itemsPerPage,
             pageCount: state => state.pageCount,
             pageLength: state => state.pageLength,
@@ -115,10 +114,10 @@
         }),
         page: {
             get() {
-                return this.$store.state.userscrud.page
+                return this.$store.state.rolescrud.page
             },
             set(val) {
-                this.$store.commit('userscrud/SET_PAGE', val)
+                this.$store.commit('rolescrud/SET_PAGE', val)
             }
         }
     },
@@ -131,13 +130,13 @@
         }
     },
     methods: {
-        ...mapActions('userscrud', ['getUsers', 'removeUsers','removeUsersAll','editUsers']),
+        ...mapActions('rolescrud', ['getUsers', 'removeUsers','removeUsersAll','editUsers']),
         create() {
-            this.$store.commit('userscrud/SET_DIALOG_CREATE', true)
+            this.$store.commit('rolescrud/SET_DIALOG_CREATE', true)
         },
         edit(id) {
-            this.$store.commit('userscrud/SET_DIALOG_EDIT', true)
-            this.$store.commit('userscrud/SET_ID', id)
+            this.$store.commit('rolescrud/SET_DIALOG_EDIT', true)
+            this.$store.commit('rolescrud/SET_ID', id)
             this.editUsers(id)
         },
         deleted(id) {

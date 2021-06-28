@@ -1,20 +1,20 @@
 <template>
   <v-card class="grey darken-3 rounded-xl" dark>
     <v-toolbar dark color="grey darken-3">
-      <v-btn icon dark @click="close()">
+      <v-btn icon dark @click="createdClose()">
         <v-icon>mdi-close</v-icon>
       </v-btn>
-      <v-toolbar-title>Show Or Edit Users</v-toolbar-title>
+      <v-toolbar-title>Add New Users</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn dark text @click="updated(id)">
+        <v-btn dark text @click="created()">
           <v-icon>mdi-content-save</v-icon>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-progress-linear indeterminate color="white" v-if="progress"></v-progress-linear>
     <v-container class="max-width">
-      <form-user></form-user>
+      <form-roles />
     </v-container>
   </v-card>
 </template>
@@ -23,25 +23,23 @@
   import Form from './Form.vue'
   export default {
     components: {
-        'form-user': Form
+        'form-roles': Form
     },
     computed: {
-        ...mapState('userscrud', {
-            id: state => state.id,
-            dialogedit: state => state.dialogedit,
+        ...mapState('rolescrud', {
+            dialogcreate: state => state.dialogcreate,
             progress: state => state.progress
         })
     },
     methods: {
-        ...mapActions('userscrud', ['updateUsers']),
-        updated(id) {
-          this.updateUsers(id).then((e) => {
-              this.$store.commit('userscrud/SET_DIALOG_EDIT', false)
-              this.$store.commit('userscrud/CLEAR_ID')
+        ...mapActions('rolescrud', ['submitUsers']),
+        created() {
+          this.submitUsers().then((e) => {
+              this.$store.commit('rolescrud/SET_DIALOG_CREATE', false)
           })
         },
-        close() {
-          this.$store.commit('userscrud/SET_DIALOG_EDIT', false)
+        createdClose() {
+          this.$store.commit('rolescrud/SET_DIALOG_CREATE', false)
         }
     }
   }

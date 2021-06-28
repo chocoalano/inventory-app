@@ -6,9 +6,11 @@ import Login from './pages/Login.vue'
 // users
 import IndexUsers from './pages/users/Index.vue'
 import DataUsers from './pages/users/Data.vue'
-import AddUsers from './pages/users/Add.vue'
-import EditUsers from './pages/users/Edit.vue'
 // users
+// roles & permission
+import IndexRoles from './pages/roles/Index.vue'
+import DataRoles from './pages/roles/Data.vue'
+// roles & permission
 import store from './store.js'
 Vue.use(Router)
 const router = new Router({
@@ -37,18 +39,18 @@ const router = new Router({
                   name: 'users.data',
                   component: DataUsers,
                   meta: { title: 'Manage Users' }
-              },
+              }
+          ]
+        },
+        {
+          path: '/roles',
+          component: IndexRoles,
+          children: [
               {
-                  path: 'add',
-                  name: 'users.add',
-                  component: AddUsers,
-                  meta: { title: 'Add New Users' }
-              },
-              {
-                  path: 'edit/:id',
-                  name: 'users.edit',
-                  component: EditUsers,
-                  meta: { title: 'Edit Users' }
+                  path: '',
+                  name: 'roles.data',
+                  component: DataRoles,
+                  meta: { title: 'Manage Roles & Permission' }
               }
           ]
       },

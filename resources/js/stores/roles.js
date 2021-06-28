@@ -1,13 +1,9 @@
 import $axios from '../api.js'
 
 const state = () => ({
-    userdata: [],
+    rolesdata: [],
     id:'',
-    user: {
-        name: '',
-        email: '',
-        roles: '',
-    },
+    roles_name:'',
     progress_table: false,
     progress: false,
     alert: false,
@@ -19,7 +15,11 @@ const state = () => ({
     pageLength: 0,
     dialogcreate: false,
     dialogedit: false,
-    permissions: [],
+    permission: [],
+    permission_form: [],
+    p_page: 1,
+    p_length: 15,
+    p_total: 7,
 })
 
 const mutations = {
@@ -39,10 +39,10 @@ const mutations = {
         state.alertmsg = payload
     },
     ASSIGN_DATA(state, payload) {
-        state.userdata = payload
+        state.rolesdata = payload
     },
-    ASSIGN_ROLES(state, payload) {
-        state.roles = payload
+    ASSIGN_PERMISSION(state, payload) {
+        state.permission = payload
     },
     SET_DIALOG_CREATE(state, payload) {
         state.dialogcreate = payload
@@ -62,6 +62,15 @@ const mutations = {
     SET_PAGELENGTH(state, payload) {
         state.pageLength = payload
     },
+    SET_PAGE_P_PAGE(state, payload) {
+        state.p_page = payload
+    },
+    SET_PAGE_P_LENGTH(state, payload) {
+        state.p_length = payload
+    },
+    SET_PAGE_P_TOTAL(state, payload) {
+        state.p_total = payload
+    },
     SET_ID(state, payload) {
         state.id = payload
     },
@@ -69,18 +78,16 @@ const mutations = {
         state.id = ''
     },
     ASSIGN_FORM(state, payload) {
-        state.user = {
-            name: payload.name,
-            email: payload.email,
-            roles: payload.roles
-        }
+        state.roles_name = payload
+    },
+    ASSIGN_FORM_PERMISSION(state, payload) {
+        state.permission_form = payload
+    },
+    CLEAR_FORM_PERMISSION(state, payload) {
+        state.permission_form = []
     },
     CLEAR_FORM(state) {
-        state.user = {
-            name: '',
-            email: '',
-            roles:''
-        }
+        state.roles_name = ''
     }
 }
 
@@ -90,7 +97,7 @@ const actions = {
         commit('ASSIGN_PROGRESS_TABLE', true)
         let search = typeof payload != 'undefined' ? payload:''
         return new Promise((resolve, reject) => {
-            $axios.get(`/users?page=${state.page}&q=${search}`)
+            $axios.get(`/roles?page=${state.page}&q=${search}`)
             .then((response) => {
                 commit('ASSIGN_DATA', response.data)
                 commit('SET_ITEMPERPAGE', response.data.meta.per_page)
@@ -100,11 +107,13 @@ const actions = {
             })
         })
     },
-    getRoles({ commit }) {
+    getPermission({ commit, state }) {
         return new Promise((resolve, reject) => {
-            $axios.get(`/users-roles`)
+            $axios.get(`/roles-permission?page=${state.p_page}`)
             .then((response) => {
-                commit('ASSIGN_ROLES', response.data.data)
+                commit('ASSIGN_PERMISSION', response.data.data)
+                commit('SET_PAGE_P_LENGTH', response.data.meta.last_page)
+                commit('SET_PAGE_P_TOTAL', response.data.meta.total)
                 resolve(response.data)
             })
         })

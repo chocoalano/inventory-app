@@ -1,21 +1,18 @@
 <template>
     <section>
-        <v-navigation-drawer v-model="drawer" app>
-          <v-list>
+        <v-navigation-drawer v-model="drawer" color="grey darken-4" app dark>
             <v-list-item link>
               <v-list-item-content>
                 <v-list-item-title class="text-h6">
-                  {{user.name}}
+                  {{authenticated.name}}
                 </v-list-item-title>
-                <v-list-item-subtitle>{{user.email}}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{authenticated.email}}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-          </v-list>
-          <v-divider></v-divider>
           <v-list nav dense>
             <v-list-item-group
               v-model="selectedItem"
-              color="primary"
+              color="white"
             >
               <v-list-item to="/">
                 <v-list-item-icon>
@@ -25,7 +22,7 @@
                   <v-list-item-title>Home</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item to="/users">
+              <v-list-item to="/users" v-if="$can('user-list')">
                 <v-list-item-icon>
                   <v-icon>mdi-account-box-multiple</v-icon>
                 </v-list-item-icon>
@@ -33,11 +30,19 @@
                   <v-list-item-title>Users Manage</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
+              <v-list-item to="/roles" v-if="$can('role-list')">
+                <v-list-item-icon>
+                  <v-icon>mdi-key-chain-variant</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Roles & Pemission Manage</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
             </v-list-item-group>
           </v-list>
         </v-navigation-drawer>
 
-        <v-app-bar app color="blue darken-4" dark>
+        <v-app-bar app color="grey darken-4" dark>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <div class="flex-grow-1"></div>
             <v-menu left bottom>
@@ -64,38 +69,39 @@
                             <v-list-item-title>Setting</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
+                    <v-list-item  @click="signoutButtonPressed">
+                        <v-list-item-action>
+                            <v-icon>mdi-logout-variant</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Logout</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
                 </v-list>
             </v-menu>
         </v-app-bar>
     </section>
 </template>
 <script>
-import { mapActions, mapMutations, mapGetters, mapState } from 'vuex';
+import { mapState,mapGetters,mapActions,mapMutations } from 'vuex'
 export default {
-  created() {
-        this.user_auth()
-    },
   props: {
       source: String,
     },
     data: () => ({
       drawer: null,
       selectedItem: 0,
-      items: [
-        { text: 'Home', icon: 'mdi-home', link:'/' },
-        { text: 'Users Manage', icon: 'mdi-account-box-multiple', link:'/users' }
-      ],
     }),
     computed: {
         ...mapState('auth', {
             loading: state => state.loading,
-            user: state => state.user
+            authenticated: state => state.authenticated
         }),
         ...mapGetters(['isAuth']),
       	...mapState(['errors'])
     },
     methods: {
-      ...mapActions('auth', ['logout','user_auth']),
+      ...mapActions('auth', ['logout']),
       ...mapMutations(['CLEAR_ERRORS']),
         signoutButtonPressed() {
           this.logout().then((e) => {
