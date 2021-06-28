@@ -48,7 +48,7 @@
         </v-toolbar>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small class="mr-2" @click="edit(item.id)" v-if="$can('user-edit')">mdi-pencil</v-icon>
+        <v-icon small class="mr-2" @click="Edit(item.id)" v-if="$can('user-edit')">mdi-pencil</v-icon>
         <v-icon small @click="deleted(item.id)" v-if="$can('user-delete')">mdi-delete</v-icon>
       </template>
       </v-data-table>
@@ -80,7 +80,7 @@
     },
     name: 'DataRoles',
     created() {
-        this.getUsers()
+        this.getIndex()
     },
     data() {
         return {
@@ -123,21 +123,21 @@
     },
     watch: {
         page() {
-            this.getUsers()
+            this.getIndex()
         },
         search() {
-            this.getUsers(this.search)
+            this.getIndex(this.search)
         }
     },
     methods: {
-        ...mapActions('rolescrud', ['getUsers', 'removeUsers','removeUsersAll','editUsers']),
+        ...mapActions('rolescrud', ['getIndex', 'remove','removeAll','edit']),
         create() {
             this.$store.commit('rolescrud/SET_DIALOG_CREATE', true)
         },
-        edit(id) {
+        Edit(id) {
             this.$store.commit('rolescrud/SET_DIALOG_EDIT', true)
             this.$store.commit('rolescrud/SET_ID', id)
-            this.editUsers(id)
+            this.edit(id)
         },
         deleted(id) {
           this.$swal({
@@ -150,12 +150,25 @@
               confirmButtonText: 'Iya, Lanjutkan!'
           }).then((result) => {
               if (result.value) {
-                  this.removeUsers(id)
+                  this.remove(id)
               }
           })
         },
         deleteAll(){
-          this.removeUsersAll(this.selected)
+          this.$swal({
+              title: 'Kamu Yakin?',
+              text: "Tindakan ini akan menghapus secara permanent!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Iya, Lanjutkan!'
+          }).then((result) => {
+              if (result.value) {
+                  this.removeAll(this.selected)
+              }
+              this.selected=[]
+          })
         }
     }
 

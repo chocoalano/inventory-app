@@ -1,9 +1,13 @@
 <template>
-  <v-form v-model="valid">
+  <v-form>
     <v-container>
       <v-row>
         <v-col cols="12" md="12">
-          <v-text-field v-model="roles_name" :rules="nameRules" :counter="10" label="Roles Name" required></v-text-field>
+          <v-text-field
+            v-model="form_roles.name"
+            label="Roles Name"
+            required >
+          </v-text-field>
         </v-col>
       </v-row>
       <v-simple-table dark class="mt-5">
@@ -26,9 +30,9 @@
               <td>{{ item.name }}</td>
               <td>
                 <v-switch
-                  v-model="permission_form"
+                  v-model="form_roles.permission"
                   color="red accent-3"
-                  value="item.id"
+                  :value="item.id"
                   hide-details
                 >
                 </v-switch>
@@ -51,13 +55,6 @@
 <script>
   import { mapActions, mapState, mapMutations } from 'vuex'
   export default {
-    data: () => ({
-      valid: false,
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
-      ],
-    }),
     created() {
         this.getPermission()
     },
@@ -66,7 +63,7 @@
         ...mapState('rolescrud', {
             roles_name: state => state.roles_name,
             permission: state => state.permission,
-            permission_form: state => state.permission_form,
+            form_roles: state => state.form_roles,
             p_page: state => state.p_page,
             p_length: state => state.p_length,
             p_total: state => state.p_total,
@@ -79,12 +76,12 @@
                 this.$store.commit('rolescrud/SET_PAGE_P_PAGE', val)
             }
         },
-        permission_form: {
+        form_roles: {
             get() {
-                return this.$store.state.rolescrud.permission_form
+                return this.$store.state.rolescrud.form_roles
             },
             set(val) {
-                this.$store.commit('rolescrud/ASSIGN_FORM_PERMISSION', val)
+                this.$store.commit('rolescrud/ASSIGN_FORM', val)
             }
         }
     },

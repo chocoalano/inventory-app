@@ -32,9 +32,9 @@
         })
     },
     methods: {
-        ...mapActions('rolescrud', ['submitUsers']),
+        ...mapActions('rolescrud', ['submitAdd']),
         created() {
-          this.submitUsers().then((e) => {
+          this.submitAdd().then((e) => {
               this.$store.commit('rolescrud/SET_DIALOG_CREATE', false)
           })
         },

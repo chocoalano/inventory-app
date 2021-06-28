@@ -2374,16 +2374,90 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.progress;
     }
   })),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('rolescrud', ['submitUsers'])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('rolescrud', ['submitAdd'])), {}, {
     created: function created() {
       var _this = this;
 
-      this.submitUsers().then(function (e) {
+      this.submitAdd().then(function (e) {
         _this.$store.commit('rolescrud/SET_DIALOG_CREATE', false);
       });
     },
     createdClose: function createdClose() {
       this.$store.commit('rolescrud/SET_DIALOG_CREATE', false);
+    }
+  })
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/roles/Edit.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/roles/Edit.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _Form_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form.vue */ "./resources/js/pages/roles/Form.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    'form-roles': _Form_vue__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)('rolescrud', {
+    id: function id(state) {
+      return state.id;
+    },
+    dialogedit: function dialogedit(state) {
+      return state.dialogedit;
+    },
+    progress: function progress(state) {
+      return state.progress;
+    }
+  })),
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)('rolescrud', ['update'])), {}, {
+    updated: function updated(id) {
+      var _this = this;
+
+      this.update(id).then(function (e) {
+        _this.$store.commit('rolescrud/SET_DIALOG_EDIT', false);
+
+        _this.$store.commit('rolescrud/CLEAR_ID');
+      });
+    },
+    close: function close() {
+      this.$store.commit('rolescrud/SET_DIALOG_EDIT', false);
     }
   })
 });
@@ -2458,18 +2532,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      valid: false,
-      nameRules: [function (v) {
-        return !!v || 'Name is required';
-      }, function (v) {
-        return v.length <= 10 || 'Name must be less than 10 characters';
-      }]
-    };
-  },
   created: function created() {
     this.getPermission();
   },
@@ -2480,8 +2548,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     permission: function permission(state) {
       return state.permission;
     },
-    permission_form: function permission_form(state) {
-      return state.permission_form;
+    form_roles: function form_roles(state) {
+      return state.form_roles;
     },
     p_page: function p_page(state) {
       return state.p_page;
@@ -2501,12 +2569,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.$store.commit('rolescrud/SET_PAGE_P_PAGE', val);
       }
     },
-    permission_form: {
+    form_roles: {
       get: function get() {
-        return this.$store.state.rolescrud.permission_form;
+        return this.$store.state.rolescrud.form_roles;
       },
       set: function set(val) {
-        this.$store.commit('rolescrud/ASSIGN_FORM_PERMISSION', val);
+        this.$store.commit('rolescrud/ASSIGN_FORM', val);
       }
     }
   }),
@@ -2622,7 +2690,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     'edit-form': _Edit_vue__WEBPACK_IMPORTED_MODULE_1__.default
   }
 }, _defineProperty(_name$components$name, "name", 'DataRoles'), _defineProperty(_name$components$name, "created", function created() {
-  this.getUsers();
+  this.getIndex();
 }), _defineProperty(_name$components$name, "data", function data() {
   return {
     headers: [{
@@ -2684,19 +2752,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }
 })), _defineProperty(_name$components$name, "watch", {
   page: function page() {
-    this.getUsers();
+    this.getIndex();
   },
   search: function search() {
-    this.getUsers(this.search);
+    this.getIndex(this.search);
   }
-}), _defineProperty(_name$components$name, "methods", _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('rolescrud', ['getUsers', 'removeUsers', 'removeUsersAll', 'editUsers'])), {}, {
+}), _defineProperty(_name$components$name, "methods", _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('rolescrud', ['getIndex', 'remove', 'removeAll', 'edit'])), {}, {
   create: function create() {
     this.$store.commit('rolescrud/SET_DIALOG_CREATE', true);
   },
-  edit: function edit(id) {
+  Edit: function Edit(id) {
     this.$store.commit('rolescrud/SET_DIALOG_EDIT', true);
     this.$store.commit('rolescrud/SET_ID', id);
-    this.editUsers(id);
+    this.edit(id);
   },
   deleted: function deleted(id) {
     var _this = this;
@@ -2711,12 +2779,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       confirmButtonText: 'Iya, Lanjutkan!'
     }).then(function (result) {
       if (result.value) {
-        _this.removeUsers(id);
+        _this.remove(id);
       }
     });
   },
   deleteAll: function deleteAll() {
-    this.removeUsersAll(this.selected);
+    var _this2 = this;
+
+    this.$swal({
+      title: 'Kamu Yakin?',
+      text: "Tindakan ini akan menghapus secara permanent!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Iya, Lanjutkan!'
+    }).then(function (result) {
+      if (result.value) {
+        _this2.removeAll(_this2.selected);
+      }
+
+      _this2.selected = [];
+    });
   }
 })), _name$components$name);
 
@@ -3628,7 +3712,10 @@ var state = function state() {
   return {
     rolesdata: [],
     id: '',
-    roles_name: '',
+    form_roles: {
+      name: '',
+      permission: []
+    },
     progress_table: false,
     progress: false,
     alert: false,
@@ -3641,7 +3728,6 @@ var state = function state() {
     dialogcreate: false,
     dialogedit: false,
     permission: [],
-    permission_form: [],
     p_page: 1,
     p_length: 15,
     p_total: 7
@@ -3704,20 +3790,20 @@ var mutations = {
     state.id = '';
   },
   ASSIGN_FORM: function ASSIGN_FORM(state, payload) {
-    state.roles_name = payload;
-  },
-  ASSIGN_FORM_PERMISSION: function ASSIGN_FORM_PERMISSION(state, payload) {
-    state.permission_form = payload;
-  },
-  CLEAR_FORM_PERMISSION: function CLEAR_FORM_PERMISSION(state, payload) {
-    state.permission_form = [];
+    state.form_roles = {
+      name: payload.name,
+      permission: payload.permission
+    };
   },
   CLEAR_FORM: function CLEAR_FORM(state) {
-    state.roles_name = '';
+    state.form_roles = {
+      name: '',
+      permission: []
+    };
   }
 };
 var actions = {
-  getUsers: function getUsers(_ref, payload) {
+  getIndex: function getIndex(_ref, payload) {
     var commit = _ref.commit,
         state = _ref.state;
     commit('ASSIGN_PROGRESS_TABLE', true);
@@ -3744,14 +3830,14 @@ var actions = {
       });
     });
   },
-  submitUsers: function submitUsers(_ref3) {
+  submitAdd: function submitAdd(_ref3) {
     var dispatch = _ref3.dispatch,
         commit = _ref3.commit,
         state = _ref3.state;
     commit('ASSIGN_PROGRESS', true);
     return new Promise(function (resolve, reject) {
-      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.post("/users", state.user).then(function (response) {
-        dispatch('getUsers').then(function () {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.post("/roles", state.form_roles).then(function (response) {
+        dispatch('getIndex').then(function () {
           resolve(response.data);
           commit('ASSIGN_ALERT', true);
           commit('ASSIGN_ALERT_MSG', response.data.msg);
@@ -3760,6 +3846,7 @@ var actions = {
             commit('ASSIGN_ALERT_MSG', response.data.msg);
           }, 4000);
         });
+        commit('CLEAR_FORM');
         commit('ASSIGN_PROGRESS', false);
       })["catch"](function (error) {
         if (error.response.status == 422) {
@@ -3770,23 +3857,23 @@ var actions = {
       });
     });
   },
-  editUsers: function editUsers(_ref4, payload) {
+  edit: function edit(_ref4, payload) {
     var commit = _ref4.commit;
     return new Promise(function (resolve, reject) {
-      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.get("/users/".concat(payload, "/edit")).then(function (response) {
-        commit('ASSIGN_FORM', response.data);
+      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.get("/roles/".concat(payload, "/edit")).then(function (response) {
+        commit('ASSIGN_FORM', response.data.data);
         resolve(response.data);
       });
     });
   },
-  updateUsers: function updateUsers(_ref5, payload) {
+  update: function update(_ref5, payload) {
     var dispatch = _ref5.dispatch,
         state = _ref5.state,
         commit = _ref5.commit;
     commit('ASSIGN_PROGRESS', true);
     return new Promise(function (resolve, reject) {
-      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.put("/users/".concat(payload), state.user).then(function (response) {
-        dispatch('getUsers').then(function () {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.put("/roles/".concat(payload), state.form_roles).then(function (response) {
+        dispatch('getIndex').then(function () {
           resolve(response.data);
           commit('ASSIGN_ALERT', true);
           commit('ASSIGN_ALERT_MSG', response.data.msg);
@@ -3800,35 +3887,35 @@ var actions = {
       });
     });
   },
-  removeUsers: function removeUsers(_ref6, payload) {
+  remove: function remove(_ref6, payload) {
     var dispatch = _ref6.dispatch,
         commit = _ref6.commit;
     return new Promise(function (resolve, reject) {
-      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.delete("/users/".concat(payload)).then(function (response) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.delete("/roles/".concat(payload)).then(function (response) {
         commit('ASSIGN_ALERT', true);
         commit('ASSIGN_ALERT_MSG', response.data.msg);
         setTimeout(function () {
           commit('ASSIGN_ALERT', false);
           commit('ASSIGN_ALERT_MSG', response.data.msg);
         }, 4000);
-        dispatch('getUsers').then(function () {
+        dispatch('getIndex').then(function () {
           return resolve();
         });
       });
     });
   },
-  removeUsersAll: function removeUsersAll(_ref7, payload) {
+  removeAll: function removeAll(_ref7, payload) {
     var dispatch = _ref7.dispatch,
         commit = _ref7.commit;
     return new Promise(function (resolve, reject) {
-      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.post("/users-all-remove", payload).then(function (response) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__.default.post("/roles-select-remove", payload).then(function (response) {
         commit('ASSIGN_ALERT', true);
         commit('ASSIGN_ALERT_MSG', response.data.msg);
         setTimeout(function () {
           commit('ASSIGN_ALERT', false);
           commit('ASSIGN_ALERT_MSG', response.data.msg);
         }, 4000);
-        dispatch('getUsers').then(function () {
+        dispatch('getIndex').then(function () {
           return resolve();
         });
       });
@@ -8524,17 +8611,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
+/* harmony import */ var _Edit_vue_vue_type_template_id_8d064b36___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Edit.vue?vue&type=template&id=8d064b36& */ "./resources/js/pages/roles/Edit.vue?vue&type=template&id=8d064b36&");
+/* harmony import */ var _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Edit.vue?vue&type=script&lang=js& */ "./resources/js/pages/roles/Edit.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
 
 
 /* normalize component */
 ;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__.default)(
-  script,
-  render,
-  staticRenderFns,
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Edit_vue_vue_type_template_id_8d064b36___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Edit_vue_vue_type_template_id_8d064b36___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -8542,6 +8632,8 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   
 )
 
+/* hot reload */
+if (false) { var api; }
 component.options.__file = "resources/js/pages/roles/Edit.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
@@ -8927,6 +9019,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/roles/Edit.vue?vue&type=script&lang=js&":
+/*!********************************************************************!*\
+  !*** ./resources/js/pages/roles/Edit.vue?vue&type=script&lang=js& ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Edit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/roles/Edit.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/pages/roles/Form.vue?vue&type=script&lang=js&":
 /*!********************************************************************!*\
   !*** ./resources/js/pages/roles/Form.vue?vue&type=script&lang=js& ***!
@@ -9138,6 +9246,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Add_vue_vue_type_template_id_4281bf96___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Add_vue_vue_type_template_id_4281bf96___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Add.vue?vue&type=template&id=4281bf96& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/roles/Add.vue?vue&type=template&id=4281bf96&");
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/roles/Edit.vue?vue&type=template&id=8d064b36&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/pages/roles/Edit.vue?vue&type=template&id=8d064b36& ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_8d064b36___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_8d064b36___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_8d064b36___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Edit.vue?vue&type=template&id=8d064b36& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/roles/Edit.vue?vue&type=template&id=8d064b36&");
 
 
 /***/ }),
@@ -10254,6 +10379,89 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/roles/Edit.vue?vue&type=template&id=8d064b36&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/roles/Edit.vue?vue&type=template&id=8d064b36& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-card",
+    { staticClass: "grey darken-3 rounded-xl", attrs: { dark: "" } },
+    [
+      _c(
+        "v-toolbar",
+        { attrs: { dark: "", color: "grey darken-3" } },
+        [
+          _c(
+            "v-btn",
+            {
+              attrs: { icon: "", dark: "" },
+              on: {
+                click: function($event) {
+                  return _vm.close()
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("mdi-close")])],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-toolbar-title", [_vm._v("Show Or Edit")]),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c(
+            "v-toolbar-items",
+            [
+              _c(
+                "v-btn",
+                {
+                  attrs: { dark: "", text: "" },
+                  on: {
+                    click: function($event) {
+                      return _vm.updated(_vm.id)
+                    }
+                  }
+                },
+                [_c("v-icon", [_vm._v("mdi-content-save")])],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm.progress
+        ? _c("v-progress-linear", {
+            attrs: { indeterminate: "", color: "white" }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _c("v-container", { staticClass: "max-width" }, [_c("form-roles")], 1)
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/roles/Form.vue?vue&type=template&id=763b8c1f&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/roles/Form.vue?vue&type=template&id=763b8c1f& ***!
@@ -10272,15 +10480,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-form",
-    {
-      model: {
-        value: _vm.valid,
-        callback: function($$v) {
-          _vm.valid = $$v
-        },
-        expression: "valid"
-      }
-    },
     [
       _c(
         "v-container",
@@ -10293,18 +10492,13 @@ var render = function() {
                 { attrs: { cols: "12", md: "12" } },
                 [
                   _c("v-text-field", {
-                    attrs: {
-                      rules: _vm.nameRules,
-                      counter: 10,
-                      label: "Roles Name",
-                      required: ""
-                    },
+                    attrs: { label: "Roles Name", required: "" },
                     model: {
-                      value: _vm.roles_name,
+                      value: _vm.form_roles.name,
                       callback: function($$v) {
-                        _vm.roles_name = $$v
+                        _vm.$set(_vm.form_roles, "name", $$v)
                       },
-                      expression: "roles_name"
+                      expression: "form_roles.name"
                     }
                   })
                 ],
@@ -10346,15 +10540,15 @@ var render = function() {
                               _c("v-switch", {
                                 attrs: {
                                   color: "red accent-3",
-                                  value: "item.id",
+                                  value: item.id,
                                   "hide-details": ""
                                 },
                                 model: {
-                                  value: _vm.permission_form,
+                                  value: _vm.form_roles.permission,
                                   callback: function($$v) {
-                                    _vm.permission_form = $$v
+                                    _vm.$set(_vm.form_roles, "permission", $$v)
                                   },
-                                  expression: "permission_form"
+                                  expression: "form_roles.permission"
                                 }
                               })
                             ],
@@ -10622,7 +10816,7 @@ var render = function() {
                               attrs: { small: "" },
                               on: {
                                 click: function($event) {
-                                  return _vm.edit(item.id)
+                                  return _vm.Edit(item.id)
                                 }
                               }
                             },

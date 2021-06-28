@@ -23,6 +23,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/users-all-remove', 'UserController@removeSelect');
     Route::get('/users-roles', 'UserController@getAllRole');
     Route::get('/roles-permission', 'RolesController@getPermission');
+    Route::post('/roles-select-remove', 'RolesController@removeSelect');
     Route::resource('/users', 'UserController');
     Route::resource('/roles', 'RolesController');
 });

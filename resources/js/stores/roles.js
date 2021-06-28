@@ -3,7 +3,10 @@ import $axios from '../api.js'
 const state = () => ({
     rolesdata: [],
     id:'',
-    roles_name:'',
+    form_roles:{
+      name:'',
+      permission:[],
+    },
     progress_table: false,
     progress: false,
     alert: false,
@@ -16,7 +19,6 @@ const state = () => ({
     dialogcreate: false,
     dialogedit: false,
     permission: [],
-    permission_form: [],
     p_page: 1,
     p_length: 15,
     p_total: 7,
@@ -78,22 +80,22 @@ const mutations = {
         state.id = ''
     },
     ASSIGN_FORM(state, payload) {
-        state.roles_name = payload
-    },
-    ASSIGN_FORM_PERMISSION(state, payload) {
-        state.permission_form = payload
-    },
-    CLEAR_FORM_PERMISSION(state, payload) {
-        state.permission_form = []
+        state.form_roles={
+          name:payload.name,
+          permission:payload.permission,
+        }
     },
     CLEAR_FORM(state) {
-        state.roles_name = ''
+      state.form_roles={
+        name:'',
+        permission:[],
+      }
     }
 }
 
 const actions = {
 
-    getUsers({ commit, state }, payload) {
+    getIndex({ commit, state }, payload) {
         commit('ASSIGN_PROGRESS_TABLE', true)
         let search = typeof payload != 'undefined' ? payload:''
         return new Promise((resolve, reject) => {
@@ -118,12 +120,12 @@ const actions = {
             })
         })
     },
-    submitUsers({ dispatch, commit, state }) {
+    submitAdd({ dispatch, commit, state }) {
         commit('ASSIGN_PROGRESS', true)
         return new Promise((resolve, reject) => {
-            $axios.post(`/users`, state.user)
+            $axios.post(`/roles`, state.form_roles)
             .then((response) => {
-                dispatch('getUsers').then(() => {
+                dispatch('getIndex').then(() => {
                     resolve(response.data)
                     commit('ASSIGN_ALERT', true)
                     commit('ASSIGN_ALERT_MSG', response.data.msg)
@@ -132,6 +134,7 @@ const actions = {
                       commit('ASSIGN_ALERT_MSG', response.data.msg)
                     }, 4000)
                 })
+                commit('CLEAR_FORM')
                 commit('ASSIGN_PROGRESS', false)
             })
             .catch((error) => {
@@ -141,21 +144,21 @@ const actions = {
             })
         })
     },
-    editUsers({ commit }, payload) {
+    edit({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            $axios.get(`/users/${payload}/edit`)
+            $axios.get(`/roles/${payload}/edit`)
             .then((response) => {
-                commit('ASSIGN_FORM', response.data)
+                commit('ASSIGN_FORM', response.data.data)
                 resolve(response.data)
             })
         })
     },
-    updateUsers({ dispatch, state, commit }, payload) {
+    update({ dispatch, state, commit }, payload) {
         commit('ASSIGN_PROGRESS', true)
         return new Promise((resolve, reject) => {
-            $axios.put(`/users/${payload}`, state.user)
+            $axios.put(`/roles/${payload}`, state.form_roles)
             .then((response) => {
-                dispatch('getUsers').then(() => {
+                dispatch('getIndex').then(() => {
                     resolve(response.data)
                     commit('ASSIGN_ALERT', true)
                     commit('ASSIGN_ALERT_MSG', response.data.msg)
@@ -169,9 +172,9 @@ const actions = {
             })
         })
     } ,
-    removeUsers({ dispatch, commit }, payload) {
+    remove({ dispatch, commit }, payload) {
         return new Promise((resolve, reject) => {
-            $axios.delete(`/users/${payload}`)
+            $axios.delete(`/roles/${payload}`)
             .then((response) => {
                 commit('ASSIGN_ALERT', true)
                 commit('ASSIGN_ALERT_MSG', response.data.msg)
@@ -179,13 +182,13 @@ const actions = {
                   commit('ASSIGN_ALERT', false)
                   commit('ASSIGN_ALERT_MSG', response.data.msg)
                 }, 4000)
-                dispatch('getUsers').then(() => resolve())
+                dispatch('getIndex').then(() => resolve())
             })
         })
     },
-    removeUsersAll({ dispatch, commit }, payload) {
+    removeAll({ dispatch, commit }, payload) {
         return new Promise((resolve, reject) => {
-            $axios.post(`/users-all-remove`, payload)
+            $axios.post(`/roles-select-remove`, payload)
             .then((response) => {
                 commit('ASSIGN_ALERT', true)
                 commit('ASSIGN_ALERT_MSG', response.data.msg)
@@ -193,7 +196,7 @@ const actions = {
                   commit('ASSIGN_ALERT', false)
                   commit('ASSIGN_ALERT_MSG', response.data.msg)
                 }, 4000)
-                dispatch('getUsers').then(() => resolve())
+                dispatch('getIndex').then(() => resolve())
             })
         })
     }
