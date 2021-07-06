@@ -6,6 +6,7 @@ const state = () => ({
       email: '',
       password: ''
   },
+  menu:[],
   user:{
     name:'',
     email:'',
@@ -22,6 +23,9 @@ const mutations = {
         name: payload.data.name,
         email: payload.data.email,
     }
+  },
+  SET_MENU(state, payload) {
+    state.menu = payload
   },
   ASSIGN_USER_AUTH(state, payload) {
         state.authenticated = payload
@@ -67,8 +71,6 @@ const actions = {
     },
     relogin({ commit, state }) {
         commit('SET_LOADING', true)
-        localStorage.setItem('token', null)
-        commit('SET_TOKEN', null, { root: true })
         return new Promise((resolve, reject) => {
             $axios.post('/login', state.data)
             .then((response) => {
@@ -80,12 +82,6 @@ const actions = {
                 }
                 commit('SET_LOADING', false)
                 resolve(response.data)
-            })
-            .catch((error) => {
-                if (error.response.status == 422) {
-                    commit('SET_ERRORS', error.response.data.errors, { root: true })
-                }
-                commit('SET_LOADING', false)
             })
         })
     },
@@ -109,11 +105,11 @@ const actions = {
             })
         })
     },
-    user_auth({ commit }) {
+    getMenu({ commit }) {
         return new Promise((resolve, reject) => {
-            $axios.get(`/auth-user`)
+            $axios.get(`/get-menu`)
             .then((response) => {
-              commit('SET_USER', response)
+              commit('SET_MENU', response.data)
             })
         })
     },
@@ -123,6 +119,8 @@ const actions = {
             .then((response) => {
                 if (response.data.status==="Token is Expired") {
                   commit('SET_EXPIRED', true, { root: true })
+                  localStorage.setItem('token', null)
+                  commit('SET_TOKEN', null, { root: true })
                 }else {
                   commit('ASSIGN_USER_AUTH', response.data.data)
                   resolve(response.data)

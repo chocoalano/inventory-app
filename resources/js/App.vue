@@ -1,10 +1,10 @@
 <template>
-    <v-app id="inspire">
-      <app-navbar v-if="isAuth" />
-      <v-dialog v-model="expired" width="500">
-        <v-card class="grey darken-3 rounded-xl" dark>
+  <v-app id="inspire">
+  <app-navbar v-if="isAuth" />
+    <v-dialog v-model="expired" width="500">
+      <v-card class="grey darken-3 rounded-xl" dark>
         <v-card-title class="text-h5">
-          Reauthenticated !
+          Reauthenticated ! {{expired}}
         </v-card-title>
         <v-card-text>
           <reauth v-if="expired"/>
@@ -20,7 +20,7 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-      </v-dialog>
+    </v-dialog>
     <v-main class="grey darken-4" dark>
       <v-container>
         <v-card elevation="18" class="rounded-xl" color="grey darken-3 mb-3 mx-auto" dark v-if="isAuth">
@@ -37,9 +37,8 @@
     import Breadcrumb from './components/Breadscrum.vue'
     import Reauth from './components/FormLogin.vue'
     export default {
-        data: () => ({ drawer: null }),
+        data: () => ({ drawer: null}),
         computed: {
-            ...mapState(['token']),
             ...mapState(['expired']),
             ...mapGetters(['isAuth'])
         },

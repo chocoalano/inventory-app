@@ -1,14 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import home from './stores/home.js'
 import auth from './stores/auth.js'
 import userscrud from './stores/users.js'
 import rolescrud from './stores/roles.js'
+import menuscrud from './stores/menus.js'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     modules: {
         auth,
+        home,
         userscrud,
         rolescrud,
+        menuscrud,
     },
     state: {
         token: localStorage.getItem('token'),

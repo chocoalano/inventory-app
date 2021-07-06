@@ -1,106 +1,112 @@
 import $axios from '../api.js'
 
 const state = () => ({
-    userdata: [],
-    id:'',
-    user: {
-        name: '',
-        email: '',
-        roles: '',
-    },
+    // STATE TABLE STARTED
+    data_table: [],
     progress_table: false,
-    progress: false,
-    alert: false,
-    alertmsg: '',
+    page_table: 1,
+    id: '',
+    perpage_table: 0,
+    length_table: 0,
+    search_table: '',
+    singleSelect_table: false,
+    selected_table: [],
+    headers_table:[
+      {
+        text: 'Name',
+        align: 'start',
+        sortable: false,
+        value: 'name',
+      },
+      { text: 'Email', value: 'email' },
+      { text: 'Created', value: 'created_at' },
+      { text: 'Updated', value: 'updated_at' },
+      { text: 'Actions', value: 'actions', sortable: false },
+    ],
+    // STATE TABLE ENDED
+    // STATE FORM STARTED
+    form: {
+      name: '',
+      email: '',
+      roles: ''
+    },
+    // STATE FORM ENDED
     roles: [],
-    page: 1,
-    itemsPerPage: 0,
-    pageCount: 0,
-    pageLength: 0,
-    dialogcreate: false,
-    dialogedit: false,
-    permissions: [],
+    progress_form: false,
+    alert: false,
+    dialog: false,
+    alertmsg: '',
 })
 
 const mutations = {
-    ASSIGN_ID_PICKERS(state, payload) {
-        state.idPicker = payload
-    },
-    ASSIGN_PROGRESS(state, payload) {
-        state.progress = payload
-    },
-    ASSIGN_PROGRESS_TABLE(state, payload) {
-        state.progress_table = payload
-    },
-    ASSIGN_ALERT(state, payload) {
-        state.alert = payload
-    },
-    ASSIGN_ALERT_MSG(state, payload) {
-        state.alertmsg = payload
-    },
-    ASSIGN_DATA(state, payload) {
-        state.userdata = payload
-    },
-    ASSIGN_ROLES(state, payload) {
-        state.roles = payload
-    },
-    SET_DIALOG_CREATE(state, payload) {
-        state.dialogcreate = payload
-    },
-    SET_DIALOG_EDIT(state, payload) {
-        state.dialogedit = payload
-    },
-    SET_PAGE(state, payload) {
-        state.page = payload
-    },
-    SET_ITEMPERPAGE(state, payload) {
-        state.itemsPerPage = payload
-    },
-    SET_PAGECOUNT(state, payload) {
-        state.pageCount = payload
-    },
-    SET_PAGELENGTH(state, payload) {
-        state.pageLength = payload
-    },
-    SET_ID(state, payload) {
-        state.id = payload
-    },
-    CLEAR_ID(state, payload) {
-        state.id = ''
-    },
-    ASSIGN_FORM(state, payload) {
-        state.user = {
-            name: payload.name,
-            email: payload.email,
-            roles: payload.roles
-        }
-    },
-    CLEAR_FORM(state) {
-        state.user = {
-            name: '',
-            email: '',
-            roles:''
-        }
-    }
+  // MUTATION TABLE STARTED
+  ASSIGN_DATA_TABLE(state, payload) {
+      state.data_table = payload
+  },
+  ASSIGN_PROGRESS_TABLE(state, payload) {
+      state.progress_table = payload
+  },
+  ASSIGN_PAGE_TABLE(state, payload) {
+      state.page_table = payload
+  },
+  ASSIGN_PERPAGE_TABLE(state, payload) {
+      state.perpage_table = payload
+  },
+  ASSIGN_LENGTH_TABLE(state, payload) {
+      state.length_table = payload
+  },
+  ASSIGN_SEARCH_TABLE(state, payload) {
+      state.search_table = payload
+  },
+  ASSIGN_SELECTED_TABLE(state, payload) {
+      state.selected_table = payload
+  },
+  CLEAR_SELECTED_TABLE(state, payload) {
+      state.selected_table = []
+  },
+  ASSIGN_SINGLE_SELECTED_TABLE(state, payload) {
+      state.singleSelect_table = payload
+  },
+  // MUTATION TABLE ENDED
+  ASSIGN_PROGRESS_FORM(state, payload) {
+      state.progress_form = payload
+  },
+  ASSIGN_ALERT(state, payload) {
+      state.alert = payload
+  },
+  ASSIGN_ALERT_MSG(state, payload) {
+      state.alertmsg = payload
+  },
+  ASSIGN_FORM(state, payload) {
+      state.form = {
+        name: payload.name,
+        email: payload.email,
+        roles: payload.roles
+      }
+  },
+  CLEAR_FORM(state, payload) {
+      state.form = {
+        name: '',
+        email: '',
+        roles:''
+      }
+  },
+  ASSIGN_ID(state, payload) {
+      state.id= payload
+  },
+  CLEAR_ID(state, payload) {
+      state.id= ''
+  },
+  ASSIGN_ROLES(state, payload) {
+      state.roles= payload
+  },
+  SET_DIALOG(state, payload) {
+      state.dialog= payload
+  },
 }
 
 const actions = {
-
-    getUsers({ commit, state }, payload) {
-        commit('ASSIGN_PROGRESS_TABLE', true)
-        let search = typeof payload != 'undefined' ? payload:''
-        return new Promise((resolve, reject) => {
-            $axios.get(`/users?page=${state.page}&q=${search}`)
-            .then((response) => {
-                commit('ASSIGN_DATA', response.data)
-                commit('SET_ITEMPERPAGE', response.data.meta.per_page)
-                commit('SET_PAGELENGTH', response.data.meta.last_page)
-                resolve(response.data)
-                commit('ASSIGN_PROGRESS_TABLE', false)
-            })
-        })
-    },
-    getRoles({ commit }) {
+    getroles({ commit, state }) {
         return new Promise((resolve, reject) => {
             $axios.get(`/users-roles`)
             .then((response) => {
@@ -109,58 +115,69 @@ const actions = {
             })
         })
     },
-    submitUsers({ dispatch, commit, state }) {
-        commit('ASSIGN_PROGRESS', true)
+    Index({ commit, state }, payload) {
+        commit('ASSIGN_PROGRESS_TABLE', true)
+        let search = typeof payload != 'undefined' ? payload:''
         return new Promise((resolve, reject) => {
-            $axios.post(`/users`, state.user)
+            $axios.get(`/users?page=${state.page_table}&q=${state.search_table}`)
             .then((response) => {
-                dispatch('getUsers').then(() => {
-                    resolve(response.data)
-                    commit('ASSIGN_ALERT', true)
-                    commit('ASSIGN_ALERT_MSG', response.data.msg)
-                    setTimeout(() => {
-                      commit('ASSIGN_ALERT', false)
-                      commit('ASSIGN_ALERT_MSG', response.data.msg)
-                    }, 4000)
-                })
-                commit('ASSIGN_PROGRESS', false)
-            })
-            .catch((error) => {
-                if (error.response.status == 422) {
-                    commit('SET_ERRORS', error.response.data.errors, { root: true })
-                }
+                commit('ASSIGN_DATA_TABLE', response.data)
+                commit('ASSIGN_PERPAGE_TABLE', response.data.meta.per_page)
+                commit('ASSIGN_LENGTH_TABLE', response.data.meta.last_page)
+                resolve(response.data)
+                commit('ASSIGN_PROGRESS_TABLE', false)
             })
         })
     },
-    editUsers({ commit }, payload) {
+    Save({dispatch, commit, state}, payload){
+      commit('ASSIGN_PROGRESS_FORM', true)
+      return new Promise((resolve, reject) => {
+          $axios.post(`/users`, state.form)
+          .then((response) => {
+              dispatch('Index').then(() => {
+                  resolve(response.data)
+                  commit('ASSIGN_ALERT', true)
+                  commit('ASSIGN_ALERT_MSG', response.data.msg)
+                  setTimeout(() => {
+                    commit('ASSIGN_ALERT', false)
+                    commit('ASSIGN_ALERT_MSG', response.data.msg)
+                  }, 4000)
+              })
+              commit('CLEAR_FORM')
+              commit('ASSIGN_PROGRESS_FORM', false)
+          })
+      })
+    },
+    show({ commit }, payload) {
         return new Promise((resolve, reject) => {
             $axios.get(`/users/${payload}/edit`)
             .then((response) => {
                 commit('ASSIGN_FORM', response.data)
+                commit('ASSIGN_ID', payload)
                 resolve(response.data)
             })
         })
     },
-    updateUsers({ dispatch, state, commit }, payload) {
-        commit('ASSIGN_PROGRESS', true)
-        return new Promise((resolve, reject) => {
-            $axios.put(`/users/${payload}`, state.user)
-            .then((response) => {
-                dispatch('getUsers').then(() => {
-                    resolve(response.data)
-                    commit('ASSIGN_ALERT', true)
+    update({dispatch, commit, state}, payload){
+      commit('ASSIGN_PROGRESS_FORM', true)
+      return new Promise((resolve, reject) => {
+          $axios.put(`/users/${payload}`, state.form)
+          .then((response) => {
+              dispatch('Index').then(() => {
+                  resolve(response.data)
+                  commit('ASSIGN_ALERT', true)
+                  commit('ASSIGN_ALERT_MSG', response.data.msg)
+                  setTimeout(() => {
+                    commit('ASSIGN_ALERT', false)
                     commit('ASSIGN_ALERT_MSG', response.data.msg)
-                    setTimeout(() => {
-                      commit('ASSIGN_ALERT', false)
-                      commit('ASSIGN_ALERT_MSG', response.data.msg)
-                      commit('CLEAR_FORM')
-                    }, 4000)
-                })
-                commit('ASSIGN_PROGRESS', false)
-            })
-        })
-    } ,
-    removeUsers({ dispatch, commit }, payload) {
+                  }, 4000)
+              })
+              commit('CLEAR_FORM')
+              commit('ASSIGN_PROGRESS_FORM', false)
+          })
+      })
+    },
+    remove({ dispatch, commit }, payload) {
         return new Promise((resolve, reject) => {
             $axios.delete(`/users/${payload}`)
             .then((response) => {
@@ -170,21 +187,23 @@ const actions = {
                   commit('ASSIGN_ALERT', false)
                   commit('ASSIGN_ALERT_MSG', response.data.msg)
                 }, 4000)
-                dispatch('getUsers').then(() => resolve())
+                dispatch('Index').then(() => resolve())
             })
         })
     },
-    removeUsersAll({ dispatch, commit }, payload) {
+    removeAll({ dispatch, commit, state }) {
         return new Promise((resolve, reject) => {
-            $axios.post(`/users-all-remove`, payload)
+            $axios.post(`/users-all-remove`, state.selected_table)
             .then((response) => {
+                commit('CLEAR_SELECTED_TABLE')
+                commit('ASSIGN_SINGLE_SELECTED_TABLE', false)
                 commit('ASSIGN_ALERT', true)
                 commit('ASSIGN_ALERT_MSG', response.data.msg)
                 setTimeout(() => {
                   commit('ASSIGN_ALERT', false)
                   commit('ASSIGN_ALERT_MSG', response.data.msg)
                 }, 4000)
-                dispatch('getUsers').then(() => resolve())
+                dispatch('Index').then(() => resolve())
             })
         })
     }

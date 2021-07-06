@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('/get-menu', 'MenuController@getMenu');
+    Route::get('/get-authorization', 'MenuController@getAuthorization');
     Route::get('auth-user', 'AuthController@getAuthenticatedUser');
     Route::get('logout', 'AuthController@logout');
     Route::get('user-authenticated', 'AuthController@getUserLogin');
@@ -24,6 +26,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('/users-roles', 'UserController@getAllRole');
     Route::get('/roles-permission', 'RolesController@getPermission');
     Route::post('/roles-select-remove', 'RolesController@removeSelect');
+    Route::post('/menu-select-remove', 'MenuController@multidestroy');
     Route::resource('/users', 'UserController');
     Route::resource('/roles', 'RolesController');
+    Route::resource('/menus', 'MenuController');
 });

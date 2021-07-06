@@ -1,21 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './pages/Home.vue'
+import Home from './pages/home/Index.vue'
 import Login from './pages/Login.vue'
 
-// users
 import IndexUsers from './pages/users/Index.vue'
-import DataUsers from './pages/users/Data.vue'
-// users
-// roles & permission
 import IndexRoles from './pages/roles/Index.vue'
-import DataRoles from './pages/roles/Data.vue'
-// roles & permission
+import IndexMenus from './pages/menus/Index.vue'
+
 import store from './store.js'
 Vue.use(Router)
 const router = new Router({
     mode: 'history',
     routes: [
+        {
+            path: '/login',
+            name: 'login',
+            component: Login
+        },
         {
             path: '/',
             name: 'home',
@@ -26,34 +27,29 @@ const router = new Router({
             }
         },
         {
-            path: '/login',
-            name: 'login',
-            component: Login
-        },
-        {
           path: '/users',
           component: IndexUsers,
-          children: [
-              {
-                  path: '',
-                  name: 'users.data',
-                  component: DataUsers,
-                  meta: { title: 'Manage Users' }
-              }
-          ]
+          meta: {
+            requiresAuth: true,
+            title: 'Users Manage'
+          }
         },
         {
           path: '/roles',
           component: IndexRoles,
-          children: [
-              {
-                  path: '',
-                  name: 'roles.data',
-                  component: DataRoles,
-                  meta: { title: 'Manage Roles & Permission' }
-              }
-          ]
-      },
+          meta: {
+            requiresAuth: true,
+            title: 'Roles & Permission Manage'
+          }
+        },
+        {
+          path: '/menus',
+          component: IndexMenus,
+          meta: {
+            requiresAuth: true,
+            title: 'Menu Manage'
+          }
+        },
     ]
 });
 router.beforeEach((to, from, next) => {

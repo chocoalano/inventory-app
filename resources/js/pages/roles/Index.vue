@@ -73,12 +73,11 @@
   import Add from './Add.vue'
   import Edit from './Edit.vue'
   export default{
-    name: 'home',
+    name: 'DataRoles',
     components: {
         'add-form': Add,
         'edit-form': Edit,
     },
-    name: 'DataRoles',
     created() {
         this.getIndex()
     },

@@ -19,9 +19,9 @@ const state = () => ({
     dialogcreate: false,
     dialogedit: false,
     permission: [],
-    p_page: 1,
-    p_length: 15,
-    p_total: 7,
+    p_page: 0,
+    p_length: 0,
+    p_total: 0,
 })
 
 const mutations = {
