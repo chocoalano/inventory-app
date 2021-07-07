@@ -11,37 +11,50 @@
           <v-btn icon dark @click="CloseDialog()">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>Machine Learning Desicion Tree For Prediction Created Tools</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark text @click="CloseDialog()">
-              Save
-            </v-btn>
-          </v-toolbar-items>
+          <v-toolbar-title>
+            Machine Learning Tools
+          </v-toolbar-title>
         </v-toolbar>
         <v-list three-line subheader>
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title>Use data from .xlsx file here.</v-list-item-title>
+              <div class="d-flex justify-center mb-6">
+                <v-alert
+                  color="#C51162"
+                  dark
+                  icon="mdi-vuetify"
+                  border="left"
+                  prominent
+                  dismissible
+                >
+                  Untuk menganalisis data, penting untuk mengetahui jenis data apa yang kita hadapi. Kita dapat membagi tipe data menjadi tiga kategori utama yaitu <b>numerik</b>, <b>kategoris</b>, <b>Urut</b>.
+                </v-alert>
+              </div>
+              <v-list-item-title>Gunakan data dari file .xlsx di sini</v-list-item-title>
               <v-list-item-subtitle>
                 <v-file-input
                   show-size
                   counter
                   multiple
-                  label=".xlsx file input formated"
+                  label="input file dengan format .xlsx"
                   accept=".xls,.xlsx"
                   @change="readExcel()"
-                ></v-file-input>
+                />
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-divider></v-divider>
+        <v-divider />
+        <div>
+          {{ xlsx }}
+        </div>
         <v-list three-line subheader>
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title>Data Loaded</v-list-item-title>
-              <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
+              <v-list-item-title class="mb-3">
+                Dengan mengetahui tipe data sumber data Anda, Anda akan dapat mengetahui teknik apa yang digunakan saat menganalisisnya.
+              </v-list-item-title>
+              <accordion-home />
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -51,10 +64,15 @@
 </template>
 <script>
   import { mapState } from 'vuex';
+  import Accordion from './accordion.vue'
   export default {
+    components: {
+        'accordion-home': Accordion,
+    },
     computed: {
         ...mapState('home', {
-        fulldialog: state => state.fulldialog
+        fulldialog: state => state.fulldialog,
+        xlsx: state => state.xlsx,
       })
     },
     methods: {
@@ -62,20 +80,7 @@
         this.$store.commit('home/SET_DIALOG', false)
       },
       readExcel(e){
-        const files = e.target.files;
-        const fileReader = new FileReader();
-        fileReader.onload = ev =>{
-          const data = ev.target.result;
-          const workbook = Xlsx.read(data, {
-            type: "binary"
-          });
-          const wsname = workbook.SheetNames[0];
-          const ws = Xlsx.utils.sheet_to_json(workbook.Sheets[wsname]);
-          ws.forEach((value, index, ws)=>{
-            console.log(value)
-          })
-        };
-        fileReader.readAsBinaryString(files[0]);
+        this.$store.commit('home/SET_DATA_XLSX', e.target.files)
       }
     }
   }

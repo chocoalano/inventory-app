@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './pages/home/Index.vue'
+import Profile from './pages/profile/Index.vue'
 import Login from './pages/Login.vue'
 
 import IndexUsers from './pages/users/Index.vue'
@@ -24,6 +25,15 @@ const router = new Router({
             meta: {
               requiresAuth: true,
               title: 'Home pages'
+            }
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: Profile,
+            meta: {
+              requiresAuth: true,
+              title: 'Profile pages'
             }
         },
         {
